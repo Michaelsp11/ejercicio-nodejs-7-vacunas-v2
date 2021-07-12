@@ -5,6 +5,7 @@ const app = require("./init");
 const {
   listarCentros,
   listarCentrosPorIdCiudad,
+  personasVacunadas,
 } = require("../db/controladores/centros");
 
 app.use(morganFreeman("dev"));
@@ -20,6 +21,13 @@ app.get("/vacunacion/centros/ciudad/:idCiudad", async (req, res, next) => {
   }
   res.json(centros);
 });
+
+app.get("/vacunacion/vacunados/centro/:idCentro", async (req, res, next) => {
+  const { idCentro } = req.params;
+  const vacunados = await personasVacunadas(idCentro);
+  res.json(vacunados);
+});
+
 
 app.use(error404);
 app.use(errorGeneral);
