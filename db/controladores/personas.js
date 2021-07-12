@@ -21,7 +21,11 @@ const crearPersonaVacunada = async (
   persona.save();
   return persona;
 };
-
+const listaPersonas = async () => {
+  const personas = await Persona.find();
+  return personas;
+};
 module.exports = {
   crearPersonaVacunada,
+  listaPersonas,
 };
