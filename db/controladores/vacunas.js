@@ -13,6 +13,11 @@ const listarVacunasCentro = async (idCentro) => {
   const centro = await CentroVacunacion.findById(idCentro).populate("vacunas");
   return centro.vacunas;
 };
+const getInfoCentro = async (idCentro) => {
+  const centro = await CentroVacunacion.findById(idCentro).populate("vacunas");
+  return centro;
+};
+
 
 const anyadirVacunaCentro = async (idVacuna, idCentro) => {
   try {
@@ -54,4 +59,5 @@ module.exports = {
   listarVacunasCentro,
   getDosisVacuna,
   anyadirVacunaCentro,
+  getInfoCentro,
 };
