@@ -1,6 +1,8 @@
 const CentroVacunacion = require("../modelos/CentroVacunacion");
 const Ciudad = require("../modelos/Ciudad");
 const Persona = require("../modelos/Persona");
+const { listaPersonas } = require("./personas");
+
 
 const listarCentros = async (nombreCiudad) => {
   const ciudad = await Ciudad.findOne({
@@ -20,9 +22,17 @@ const listarCentrosPorIdCiudad = async (idCiudad) => {
   const ciudad = await Ciudad.findOne({
     _id: idCiudad,
   }).populate("puntosVacunacion");
-  return ciudad.puntosVacunacion;
+  return ciudad.puntosVacunacion ? ciudad.puntosVacunacion : ciudad;
 };
-
+const listarPersonasVacunadasPorCiudad = async (idCiudad) => {
+  const ciudad = await Ciudad.findOne({
+    _id: idCiudad,
+  });
+  const personas = await Persona.find({
+    centroVacunacion: ciudad.puntosVacunacion.map((centro) => centro._id),
+  });
+  return personas;
+};
 const crearCentros = async () => {
   CentroVacunacion.insertMany([
     {
@@ -65,4 +75,5 @@ module.exports = {
   crearCentros,
   listarCentrosPorIdCiudad,
   personasVacunadas,
+  listarPersonasVacunadasPorCiudad,
 };
