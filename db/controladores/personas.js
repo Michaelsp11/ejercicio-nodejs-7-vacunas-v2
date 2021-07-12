@@ -25,7 +25,14 @@ const listaPersonas = async () => {
   const personas = await Persona.find();
   return personas;
 };
+const listaPersona = async (dniParametro) => {
+  const persona = await Persona.find({
+    dni: dniParametro,
+  }).populate("vacuna centroVacunacion");
+  return persona;
+};
 module.exports = {
   crearPersonaVacunada,
   listaPersonas,
+  listaPersona,
 };
