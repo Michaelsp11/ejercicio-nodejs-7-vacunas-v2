@@ -3,11 +3,19 @@ const Ciudad = require("../modelos/Ciudad");
 const Persona = require("../modelos/Persona");
 const { listaPersonas } = require("./personas");
 
+
 const listarCentros = async (nombreCiudad) => {
   const ciudad = await Ciudad.findOne({
     nombre: nombreCiudad,
   }).populate("puntosVacunacion");
   return ciudad.puntosVacunacion;
+};
+
+const personasVacunadas = async (idCentro) => {
+  const personas = await Persona.find({
+    centroVacunacion: idCentro,
+  });
+  return personas;
 };
 
 const listarCentrosPorIdCiudad = async (idCiudad) => {
@@ -66,5 +74,6 @@ module.exports = {
   listarCentros,
   crearCentros,
   listarCentrosPorIdCiudad,
+  personasVacunadas,
   listarPersonasVacunadasPorCiudad,
 };
