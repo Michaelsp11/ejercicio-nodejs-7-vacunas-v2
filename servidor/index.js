@@ -8,6 +8,7 @@ const {
   listarPersonasVacunadasPorCiudad,
 } = require("../db/controladores/centros");
 const { getInfoCentro } = require("../db/controladores/vacunas");
+const { listaPersona } = require("../db/controladores/personas");
 
 app.use(morganFreeman("dev"));
 app.use(express.json());
@@ -34,11 +35,15 @@ app.get("/vacunacion/vacunados/ciudad/:idCiudad", async (req, res, next) => {
   }
   res.json(personas);
 });
-app.get("/vacunacion/centros/centro/:idCentro" , async (req, res, next) => {
+app.get("/vacunacion/centros/centro/:idCentro", async (req, res, next) => {
   const { idCentro } = req.params;
   const centro = await getInfoCentro(idCentro);
   res.json(centro);
-
+});
+app.get("/vacunacion/vacunados/persona/:dni", async (req, res, next) => {
+  const { dni } = req.params;
+  const persona = await listaPersona(dni.toUpperCase());
+  res.json(persona);
 });
 app.use(error404);
 app.use(errorGeneral);
